@@ -18,3 +18,6 @@ vim.opt.clipboard='unnamedplus'
 -- setting fold instructions
 vim.opt.foldmethod='expr'
 vim.opt.foldexpr='nvim_treesitter#foldexpr()'
+
+-- better completion from lsp
+vim.o.completeopt="menuone,noinsert,noselect"
