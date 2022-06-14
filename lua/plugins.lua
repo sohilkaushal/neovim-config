@@ -4,9 +4,10 @@ return require 'packer'.startup(function()
   -- file manager and some sugar
   use {
     'kyazdani42/nvim-tree.lua',
-    requires = 'kyazdani42/nvim-web-devicons',
-    config = function() require'nvim-tree'.setup {
-    } end
+    requires = {
+      'kyazdani42/nvim-web-devicons', -- optional, for file icon
+    },
+    tag = 'nightly' -- optional, updated every week. (see issue #1193)
   }
   -- treesitter
   use {
@@ -26,9 +27,10 @@ return require 'packer'.startup(function()
   use 'onsails/lspkind-nvim'
   -- fuzzy finder
   use {
-  'nvim-telescope/telescope.nvim',
-  requires = { {'nvim-lua/plenary.nvim'} }
+    'nvim-telescope/telescope.nvim',
+    requires = { {'nvim-lua/plenary.nvim'} },
   }
+
   -- statusline
   use {
     'nvim-lualine/lualine.nvim',
@@ -44,32 +46,43 @@ return require 'packer'.startup(function()
       require('gitsigns').setup()
     end
   }
-  -- org mode -> super alpha
-  use { 
-    "nvim-neorg/neorg",
-    config = function()
-        require('neorg').setup {
-            -- Tell Neorg what modules to load
-            load = {
-                ["core.defaults"] = {}, -- Load all the default modules
-                ["core.norg.concealer"] = {}, -- Allows for use of icons
-                ["core.norg.dirman"] = { -- Manage your directories with Neorg
-                    config = {
-                        workspaces = {
-                            my_workspace = "~/neorg"
-                        }
-                    }
-                },
-                ["core.norg,completion"] = {
-                  config = {
-                    engine = "nvim-cmp"
-                  }
-                }
-            },
-        }
-    end,
-    requires = "nvim-lua/plenary.nvim"
-  }
   use "lukas-reineke/indent-blankline.nvim"
-end)
+  use {
+    "lukas-reineke/headlines.nvim",
+    config = function()
+      require('headlines').setup()
+    end,
+  }
+  use 'folke/lsp-colors.nvim'
+  use {
+    'williamboman/nvim-lsp-installer',
+  }
+  use {
+  "ray-x/lsp_signature.nvim",
+  }
+  use "folke/trouble.nvim"
+  use {
+    'glacambre/firenvim',
+    run = function() vim.fn['firenvim#install'](0) end 
+  }
+  use "vimwiki/vimwiki"
+  use {
+    'VonHeikemen/lsp-zero.nvim',
+    requires = {
+    -- LSP Support
+    {'neovim/nvim-lspconfig'},
+    {'williamboman/nvim-lsp-installer'},
+    -- Autocompletion
+    {'hrsh7th/nvim-cmp'},
+    {'hrsh7th/cmp-buffer'},
+    {'hrsh7th/cmp-path'},
+    {'saadparwaiz1/cmp_luasnip'},
+    {'hrsh7th/cmp-nvim-lsp'},
+    {'hrsh7th/cmp-nvim-lua'},
+    -- Snippets
+    {'L3MON4D3/LuaSnip'},
+    {'rafamadriz/friendly-snippets'},
+  }
+  }
+  end)
 
